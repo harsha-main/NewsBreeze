@@ -6,4 +6,6 @@ public class Constants {
     public final static String tag = "testing";
     public final static String datePattern = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     public final static String expectedDatePattern = "dd-MM-yy";
+    public static final String POSITION ="position" ;
+    public static final String DATA ="data" ;
 }

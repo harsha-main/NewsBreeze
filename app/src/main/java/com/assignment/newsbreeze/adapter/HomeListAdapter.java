@@ -3,12 +3,14 @@ package com.assignment.newsbreeze.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.assignment.newsbreeze.MainActivity;
 import com.assignment.newsbreeze.R;
 import com.assignment.newsbreeze.helper.Constants;
 import com.assignment.newsbreeze.model.data.Article;
@@ -23,9 +25,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeIt
     List<Article> articles;
     RequestOptions requestOptions;
 
-    SimpleDateFormat inputDatePattern,expectedDatePattern;
+    SimpleDateFormat inputDatePattern, expectedDatePattern;
+    MainActivity activity;
 
-    public HomeListAdapter() {
+    public HomeListAdapter(MainActivity activity) {
         requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.placeholder);
         requestOptions.error(R.drawable.error);
@@ -33,7 +36,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeIt
         inputDatePattern = new SimpleDateFormat(Constants.datePattern);
 
         expectedDatePattern = new SimpleDateFormat(Constants.expectedDatePattern);
-
+        this.activity = activity;
     }
 
     @NonNull
@@ -45,7 +48,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeIt
     @Override
     public void onBindViewHolder(@NonNull HomeItemHolder holder, int position) {
         Article item = articles.get(position);
-
         Glide.with(holder.thumb.getContext()).setDefaultRequestOptions(requestOptions).load(item.getUrlToImage()).into(holder.thumb);
 
         String dtStart = item.getPublishedAt();
@@ -58,7 +60,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeIt
         holder.date.setText(expectedDatePattern.format(date));
         holder.title.setText(item.getTitle());
         holder.desc.setText(item.getDescription());
-
+        holder.read.setOnClickListener(v -> activity.openDetailFragment(position));
+        holder.save.setOnClickListener(v->activity.saveItem(position));
     }
 
     @Override
@@ -74,14 +77,17 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeIt
     class HomeItemHolder extends RecyclerView.ViewHolder {
         ImageView thumb;
         TextView title, desc, date;
+        Button read, save;
 
         public HomeItemHolder(@NonNull View itemView) {
             super(itemView);
             thumb = itemView.findViewById(R.id.thumb);
-            thumb.setClipToOutline(true);
             title = itemView.findViewById(R.id.title);
             desc = itemView.findViewById(R.id.description);
             date = itemView.findViewById(R.id.date);
+            read = itemView.findViewById(R.id.read);
+            save = itemView.findViewById(R.id.save);
+
         }
     }
 }

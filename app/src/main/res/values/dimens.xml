@@ -11,4 +11,5 @@
     <dimen name="divider_margin">50dp</dimen>
     <dimen name="divider_height">5dp</dimen>
     <dimen name="home_card_top_margin">20dp</dimen>
+    <dimen name="content_margin">30dp</dimen>
 </resources>
