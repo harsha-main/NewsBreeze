@@ -9,3 +9,6 @@ The application uses Glide, Retrofit and GSON libraries. Constraint layout is ma
 There is only a single activity used for the entire application and the remaining screens are designed as fragments as it helps with loading time. Since there is only a single activity, whenever communication was required from the fragment to activity, the getActivity() method is used with a simple cast to MainActivity to communicate easily.
 
 Due to time constraint, the application is developed with the assumption that the device is internet enabled while the app is run.
+
+To download the APK, use the following link
+https://drive.google.com/file/d/1hoeAacMUMZA0MGygOInC-XBstLUGVwrS/view?usp=sharing
