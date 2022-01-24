@@ -13,4 +13,6 @@
     <dimen name="home_card_top_margin">20dp</dimen>
     <dimen name="content_margin">30dp</dimen>
     <dimen name="list_item_bottom_margin">20dp</dimen>
+    <dimen name="back_icon_size">30dp</dimen>
+    <dimen name="saved_image_size">80dp</dimen>
 </resources>

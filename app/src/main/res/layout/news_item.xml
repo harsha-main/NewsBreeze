@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/text_margin"
         android:text="date"
-        android:textColor="#C1C0BF"
+        android:textColor="@color/grey"
         android:textSize="@dimen/date_size"
         app:layout_constraintStart_toStartOf="@id/description"
         app:layout_constraintTop_toBottomOf="@id/description" />

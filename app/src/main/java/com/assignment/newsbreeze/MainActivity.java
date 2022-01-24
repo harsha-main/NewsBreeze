@@ -1,38 +1,41 @@
 package com.assignment.newsbreeze;
 
+import static com.assignment.newsbreeze.helper.SavedItemHelper.setBookmark;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.assignment.newsbreeze.adapter.HomeListAdapter;
 import com.assignment.newsbreeze.helper.Constants;
+import com.assignment.newsbreeze.model.data.Article;
 import com.assignment.newsbreeze.viewmodel.HomeViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity {
-    HomeListAdapter adapter;
+    private HomeListAdapter adapter;
 
-
-    HomeViewModel homeViewModel;
-    ProgressBar progress;
-    RecyclerView recyclerView;
-    InputMethodManager imm;
+    private HomeViewModel homeViewModel;
+    private ProgressBar progress;
+    private RecyclerView recyclerView;
+    private InputMethodManager imm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         progress = findViewById(R.id.progressbar);
+        findViewById(R.id.saved_items).setOnClickListener(v -> openSavedItemsFragment());
         setList();
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.init();
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             adapter.setItems(articles);
         });
         homeViewModel.getProgressVisible().observe(this, visible -> {
-            if(visible)progress.setVisibility(View.VISIBLE);
+            if (visible) progress.setVisibility(View.VISIBLE);
         });
         setSearch();
     }
@@ -76,12 +79,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
     }
 
-    public void openDetailFragment(int position) {
+    public void openSavedItemsFragment() {
+
+        SavedItemFragment fragment = new SavedItemFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frame, fragment).addToBackStack("").commit();
+
+
+    }
+    public void openDetailFragment(Article article, int position) {
 
         DetailFragment fragment = new DetailFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.POSITION, position);
-        bundle.putSerializable(Constants.DATA, homeViewModel.getNewsItemsLiveData().getValue().get(position));
+        bundle.putSerializable(Constants.DATA, article);
         //add item data
         fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -91,8 +103,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void saveItem(int position) {
+    public void saveItem(ImageView bookmark, int position) {
         homeViewModel.addSaveItem(position);
+        setBookmark(bookmark, true);
+    }
+
+    public void saveItem(ImageView bookmark, int position, boolean fromFrag) {
+        saveItem(bookmark, position);
+        if (fromFrag)
+            adapter.notifyItemChanged(position);
     }
 
     public HomeViewModel getHomeViewModel() {

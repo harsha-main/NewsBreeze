@@ -26,13 +26,35 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:layout_width="@dimen/back_icon_size"
+                android:layout_height="@dimen/back_icon_size"
+                android:layout_margin="@dimen/bookmark_margin"
+                android:adjustViewBounds="true"
+                android:id="@+id/back"
+                android:src="@drawable/back_button"
+                app:layout_constraintStart_toStartOf="@id/fullImage"
+                app:layout_constraintTop_toTopOf="@id/fullImage" />
+
+            <ImageView
+                android:id="@+id/bookmark"
+                android:layout_width="@dimen/bookmark_size"
+                android:layout_height="@dimen/bookmark_size"
+                android:layout_margin="@dimen/bookmark_margin"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bookmark_background"
+                android:padding="5dp"
+                android:src="@drawable/bookmark"
+                app:layout_constraintEnd_toEndOf="@id/fullImage"
+                app:layout_constraintTop_toTopOf="@id/fullImage" />
+
             <View
                 android:id="@+id/gradient"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/black_gradient"
-                app:layout_constraintTop_toTopOf="@id/date"
-                app:layout_constraintBottom_toBottomOf="@id/fullImage" />
+                app:layout_constraintBottom_toBottomOf="@id/fullImage"
+                app:layout_constraintTop_toTopOf="@id/date" />
 
             <TextView
                 android:id="@+id/date"

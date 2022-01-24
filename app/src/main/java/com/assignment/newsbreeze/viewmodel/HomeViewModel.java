@@ -96,4 +96,15 @@ public class HomeViewModel extends ViewModel {
         savedItems.setValue(list);
     }
 
+    public List<Article> searchFromList(String s) {
+        List<Article> items = savedItems.getValue();
+        List<Article> results =new ArrayList<>();
+
+        for (Article item : items) {
+            if (item.getTitle().contains(s)) {
+                results.add(item);
+            }
+        }
+        return results;
+    }
 }

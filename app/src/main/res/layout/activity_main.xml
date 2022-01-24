@@ -4,9 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
     android:background="@color/background_color"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintWidth_percent="0.4"
+        android:layout_height="wrap_content"
+        android:src="@drawable/app_icon"
+        android:id="@+id/app_icon"
+        android:layout_margin="@dimen/home_card_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/saved_items"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/home_card_margin"
+        android:adjustViewBounds="true"
+        android:background="@drawable/bookmark_background_selected"
+        android:padding="10dp"
+        android:src="@drawable/bookmark_filled"
+        app:layout_constraintTop_toTopOf="@id/app_icon"
+        app:layout_constraintBottom_toBottomOf="@id/app_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -20,13 +44,13 @@
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
         app:endIconMode="clear_text"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_icon"
         app:startIconDrawable="@drawable/search_icon">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputsearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/inputsearch"
             android:inputType="text"
             android:maxLines="1" />
 
