@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_color">#F8F8FB</color>
     <color name="divider_color">#E8E8F7</color>
+    <color name="grey_bookmark">#C1C0BC</color>
+    <color name="bookmark_green">#94C77D</color>
 </resources>

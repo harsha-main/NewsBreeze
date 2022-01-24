@@ -61,7 +61,25 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeIt
         holder.title.setText(item.getTitle());
         holder.desc.setText(item.getDescription());
         holder.read.setOnClickListener(v -> activity.openDetailFragment(position));
-        holder.save.setOnClickListener(v->activity.saveItem(position));
+        holder.save.setOnClickListener(v -> {
+            activity.saveItem(position);
+            setBookmark(holder.bookmark, true);
+        });
+        List<Article> savedItems = activity.getHomeViewModel().getSavedItems().getValue();
+        boolean isSaved = false;
+        if (savedItems != null)
+            for (Article article : savedItems) {
+                if (item.getTitle().equals(article.getTitle())) {
+                    isSaved = true;
+                    break;
+                }
+            }
+        setBookmark(holder.bookmark, isSaved);
+    }
+
+    void setBookmark(ImageView view, boolean enabled) {
+        view.setImageResource(enabled ? R.drawable.bookmark_filled : R.drawable.bookmark);
+        view.setBackgroundResource(enabled ? R.drawable.bookmark_background_selected : R.drawable.bookmark_background);
     }
 
     @Override
@@ -75,13 +93,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HomeIt
     }
 
     class HomeItemHolder extends RecyclerView.ViewHolder {
-        ImageView thumb;
+        ImageView thumb, bookmark;
         TextView title, desc, date;
         Button read, save;
 
         public HomeItemHolder(@NonNull View itemView) {
             super(itemView);
             thumb = itemView.findViewById(R.id.thumb);
+            bookmark = itemView.findViewById(R.id.bookmark);
             title = itemView.findViewById(R.id.title);
             desc = itemView.findViewById(R.id.description);
             date = itemView.findViewById(R.id.date);

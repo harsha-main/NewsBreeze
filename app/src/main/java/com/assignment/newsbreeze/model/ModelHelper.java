@@ -3,18 +3,16 @@ package com.assignment.newsbreeze.model;
 
 import static com.assignment.newsbreeze.helper.Constants.newsKey;
 
-import com.assignment.newsbreeze.MainActivity;
 import com.assignment.newsbreeze.model.data.DataModel;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 
 public class ModelHelper {
-
+    APIInterface apiInterface;
     static ModelHelper helper;
 
     private ModelHelper() {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
 
     }
 
@@ -25,11 +23,19 @@ public class ModelHelper {
         return helper;
     }
 
-    public Call<DataModel> getRetrofitCall( ) {
-        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+    public Call<DataModel> getBreakingNewsRequest() {
 
+        return apiInterface.getBreakingNewsItems("in", newsKey);
 
-        return apiInterface.doGetListResources("in",newsKey);
+    }
+    public Call<DataModel> getSearchRequest(String search) {
+
+        return apiInterface.getSearchNewsItems(search, newsKey);
+
+    }
+    public Call<DataModel> getSearchNewsRequest(String string) {
+
+        return apiInterface.getSearchNewsItems(string, newsKey);
 
     }
 }
